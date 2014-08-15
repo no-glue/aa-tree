@@ -15,10 +15,13 @@ class AaNode {
     // right children
     int level;
     // level
-    AaNode():key(""), value({""}), left(NULL), right(NULL), level(1) {
+    AaNode():key(""), left(NULL), right(NULL), level(1) {
       // set up empty node
     }
-    AaNode(string & key, string & value, AaNode * left, AaNode * right, int level):key(key), value(value), left(left), right(right), level(level) {
+    AaNode(string & key, string & value):key(key), value({value}), left(NULL), right(NULL), level(1) {
+      // set up bare bones node
+    }
+    AaNode(string & key, string & value, AaNode * left, AaNode * right, int level):key(key), value({value}), left(left), right(right), level(level) {
       // set up node
     }
 };
