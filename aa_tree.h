@@ -4,21 +4,21 @@ class AaTree {
 public:
   AaTree():root(NULL) {}
   ~AaTree() {make_empty(root); delete root;}
-  void insert(string & key, string & value) {
+  void insert(string key, string & value) {
     // insert key and value
     insert(key, value, root);
   }
-  void remove(string & key) {
+  void remove(string key) {
     // remove node
     remove(key, root);
   }
-  AaNode * find(string & key) {
+  AaNode * find(string key) {
     // find key
     return find(key, root);
   }
 private:
   AaNode * root;
-  void insert(string & key, string & value, AaNode * & root) {
+  void insert(string key, string & value, AaNode * & root) {
     // insert key and value
     if(!root) root = new AaNode(key, value);
     else if (key < root->key) insert(key, value, root->left);
@@ -48,7 +48,7 @@ private:
       root = return_node;
     }
   }
-  void remove(string & key, AaNode * & root) {
+  void remove(string key, AaNode * & root) {
     // remove node
     static AaNode * to_remove;
     if (!root) return;
@@ -93,7 +93,7 @@ private:
     }
     root = NULL;
   }
-  AaNode * find(string & key, AaNode * & root) {
+  AaNode * find(string key, AaNode * & root) {
     // find key
     AaNode * look = root;
     while(look) {

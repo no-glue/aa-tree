@@ -17,5 +17,12 @@ int main() {
   tree->insert(key, value);
   found = tree->find(key);
   cout<<"found: "<<key<<" "<<found->value[0]<<" "<<"\n";
+  key = "bla";
+  found = tree->find(key);
+  cout<<"found: "<<found<<"\n";
+  key = "dislike";
+  tree->remove(key);
+  found = tree->find(key);
+  cout<<"found: "<<found<<"\n";
   delete tree;
 }
