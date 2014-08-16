@@ -12,7 +12,7 @@ public:
     // remove node
     remove(key, root);
   }
-  vector<string> & find(string & key) {
+  AaNode * find(string & key) {
     // find key
     return find(key, root);
   }
@@ -93,14 +93,14 @@ private:
     }
     root = NULL;
   }
-  vector<string> & find(string & key, AaNode * & root) {
+  AaNode * find(string & key, AaNode * & root) {
     // find key
     AaNode * look = root;
-    vector<string> empty;empty.push_back("");
     while(look) {
-      if(look->key == key) return look->value;
+      if(look->key == key) return look;
       if(key < look->key) look = look->left;
       if(key > look->key) look = look->right;
     }
+    return NULL;
   }
 };

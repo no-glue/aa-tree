@@ -11,7 +11,7 @@ class AaNode {
   public:
     string & key;
     // key for this node
-    vector<string> & value;
+    vector<string> value;
     // values for this node
     AaNode * left;
     // left children
