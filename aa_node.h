@@ -1,5 +1,9 @@
 #include <cstring>
 #include <vector>
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -15,13 +19,12 @@ class AaNode {
     // right children
     int level;
     // level
-    AaNode():key(""), left(NULL), right(NULL), level(1) {
-      // set up empty node
-    }
-    AaNode(string & key, string & value):key(key), value({value}), left(NULL), right(NULL), level(1) {
+    AaNode(string & key, string & init_value):key(key), left(NULL), right(NULL), level(1) {
       // set up bare bones node
+      value.push_back(init_value);
     }
-    AaNode(string & key, string & value, AaNode * left, AaNode * right, int level):key(key), value({value}), left(left), right(right), level(level) {
+    AaNode(string & key, string & init_value, AaNode * left, AaNode * right, int level):key(key), left(left), right(right), level(level) {
       // set up node
+      value.push_back(init_value);
     }
 };
