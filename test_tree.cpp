@@ -24,5 +24,6 @@ int main() {
   tree->remove(key);
   found = tree->find(key);
   cout<<"found: "<<found<<"\n";
+  cout<<"level: "<<tree->level()<<"\n";
   delete tree;
 }

@@ -16,6 +16,10 @@ public:
     // find key
     return find(key, root);
   }
+  int level() {
+    // get root level (tree height)
+    return root->level;
+  }
 private:
   AaNode * root;
   void insert(string key, string & value, AaNode * & root) {
@@ -29,7 +33,8 @@ private:
   }
   void skew(AaNode * & root) {
     // skew tree, rotate right (with left child)
-    if(!root || !root->left) return;
+    if(!root) return;
+    if(!root->left) return;
     if(root->level == root->left->level) {
       AaNode * return_node = root->left;
       root->left = return_node->right;
@@ -39,7 +44,9 @@ private:
   }
   void split(AaNode * & root) {
     // split tree, rotate left (with right child)
-    if(!root || !root->right || !root->right->right) return;
+    if(!root) return;
+    if(!root->right) return;
+    if(!root->right->right) return;
     if(root->right->right->level == root->level) {
       AaNode * return_node = root->right;
       root->right = return_node->left;
@@ -78,10 +85,12 @@ private:
   }
   void decrease_level(AaNode * & root) {
     // decrease level of node
-    int should_be = min(root->left->level, root->right->level) + 1;
+    if(!root) return;
+    int left = (root->left) ? root->left->level : 1, right = (root->right) ? root->right->level : 1;
+    int should_be = min(left, right) + 1;
     if(should_be < root->level) {
       root->level = should_be;
-      if(should_be < root->right->level) root->right->level = should_be;
+      if(root->right && should_be < root->right->level) root->right->level = should_be;
     }
   }
   void make_empty(AaNode * & root) {
@@ -97,9 +106,9 @@ private:
     // find key
     AaNode * look = root;
     while(look) {
-      if(look->key == key) return look;
-      if(key < look->key) look = look->left;
-      if(key > look->key) look = look->right;
+      if(look && look->key == key) return look;
+      if(look && key < look->key) look = look->left;
+      if(look && key > look->key) look = look->right;
     }
     return NULL;
   }
