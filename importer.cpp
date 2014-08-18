@@ -3,12 +3,14 @@
 int main() {
   AaTree * tree = new AaTree();
   string line;
-  ifstream myfile("../../node/netmark/data/orkutaa");
-  myfile.seekg(0, ios::end);
-  streamsize size = myfile.tellg();
-  myfile.seekg(0, ios::beg);
-  vector<unsigned char> buffer(size);
+  ifstream myfile("../../node/netmark/data/split/orkutaa");
+  streamsize size;
+  vector<unsigned char> buffer;
   string edge, from, to;
+  myfile.seekg(0, ios::end);
+  size = myfile.tellg();
+  myfile.seekg(0, ios::beg);
+  buffer.resize(size);
   if(myfile.read(buffer.data(), size)) {
     cout<<"loaded file\n";
     for(vector<unsigned char>::iterator it = buffer.begin(); it != buffer.end(); ++it) {
