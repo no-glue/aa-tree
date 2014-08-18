@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <assert.h>
+#include <dirent.h>
 
 using namespace std;
 
