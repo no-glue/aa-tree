@@ -10,7 +10,8 @@ public:
   }
   void remove(string key) {
     // remove node
-    remove(key, root);
+    if(root && !root->left && !root->right && root->key == key) {delete root; root = NULL;}
+    else remove(key, root);
   }
   AaNode * find(string key) {
     // find key
