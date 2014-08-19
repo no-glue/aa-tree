@@ -12,17 +12,19 @@ public:
     streamsize size;
     vector<unsigned char> buffer;
     string edge, from, to;
-    while(dir && (file = readdir(dir))) {
+    int count = 0;
+    while(dir && (file = readdir(dir)) && ++count) {
       if(file->d_name[0] == '.') continue;
       file_path = dir_name + file->d_name;
       myfile.open(file_path.c_str(), ifstream::in);
       myfile.seekg(0, ios::end);
       size = myfile.tellg();
       myfile.seekg(0, ios::beg);
-      buffer.resize(size);
       buffer.clear();
+      buffer.resize(size);
+      edge = "";
       if(myfile.read(buffer.data(), size)) {
-        cout<<"loaded file: "<<file->d_name<<endl;
+        cout<<"loaded file: "<<file->d_name<<" "<<count<<endl;
         for(vector<unsigned char>::iterator it = buffer.begin(); it != buffer.end(); ++it) {
           if(*it == '\t') {
             if(edge.at(0) == '\n') edge.erase(0, 1);
