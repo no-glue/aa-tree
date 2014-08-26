@@ -3,10 +3,8 @@
 
 using namespace boost::python;
 
+void (AaTree::*insert)(string, string) = &AaTree::insert;
+
 BOOST_PYTHON_MODULE(AaDictionary) {
-  class_<AaTree>("AaTree").
-  def("insert", &AaTree::insert).
-  def("remove", &AaTree::remove).
-  def("find", &AaTree::find).
-  def("level", &AaTree::level);
+  class_<AaTree>("AaTree").def("insert", insert);
 };

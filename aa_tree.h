@@ -4,7 +4,7 @@ class AaTree {
 public:
   AaTree():root(NULL) {}
   ~AaTree() {make_empty(root); delete root;}
-  void insert(string key, string & value) {
+  void insert(string key, string value) {
     // insert key and value
     insert(key, value, root);
   }
@@ -23,7 +23,7 @@ public:
   }
 private:
   AaNode * root;
-  void insert(string key, string & value, AaNode * & root) {
+  void insert(string key, string value, AaNode * & root) {
     // insert key and value
     if(!root) root = new AaNode(key, value);
     else if (key < root->key) insert(key, value, root->left);
