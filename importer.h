@@ -29,6 +29,7 @@ public:
           if(*it == '\t') {
             if(edge.at(0) == '\n') edge.erase(0, 1);
             from = edge;
+            cout<<"from: "<<from<<endl;
             edge = "";
           }
           if(*it == '\n') {
@@ -43,5 +44,31 @@ public:
       myfile.close();
     }
     closedir(dir);
+  }
+  int nodes(AaTree * & tree) {
+    // get number of nodes
+    // todo move this to another component
+    return stoi(tree->find("nodes")->value[0]);
+  }
+  int edges(AaTree * & tree) {
+    // get number of edges
+    // todo move this to another component
+    return stoi(tree->find("edges")->value[0]);
+  }
+  double density(AaTree * & tree) {
+    // network density
+    // todo move this to another component
+    double e = (double)stoi(tree->find("edges")->value[0]);
+    double n = (double)stoi(tree->find("nodes")->value[0]);
+
+    return (2 * e) / (n * (n - 1));
+  }
+  float average_degree(AaTree * & tree) {
+    // average number of edges for a node
+    // todo move this to another component
+    int e = stoi(tree->find("edges")->value[0]);
+    int n = stoi(tree->find("nodes")->value[0]);
+
+    return (2 * e) / (float)(n);
   }
 };
