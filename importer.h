@@ -78,7 +78,6 @@ public:
     int i = 0;
     queue<string> nodes;
     queue<int> depth;
-    int current_depth = 0;
 
     for(; i < found->value.size(); i++) {
       nodes.push(found->value[i]);
@@ -90,7 +89,6 @@ public:
       nodes.pop();
       start_depth = depth.front();
       depth.pop();
-      if(start_depth > current_depth) current_depth = start_depth; else break;
 
       if(found) {
         for(i = 0; i < found->value.size(); i++) {
