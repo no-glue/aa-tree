@@ -29,7 +29,6 @@ public:
           if(*it == '\t') {
             if(edge.at(0) == '\n') edge.erase(0, 1);
             from = edge;
-            cout<<"from: "<<from<<endl;
             edge = "";
           }
           if(*it == '\n') {
@@ -71,8 +70,9 @@ public:
 
     return (2 * e) / (float)(n);
   }
-  int depth_first_search(AaTree * & tree, string start_node, int start_depth = 1) {
+  int depth_first_search(AaTree * & tree, string start_node = "1", int start_depth = 1) {
     // find max depth
+    // todo decorate this
     AaNode * found = tree->find(start_node);
     int i = 0;
     stack<string> nodes;
@@ -91,9 +91,11 @@ public:
       depth.pop();
       if(start_depth > current_depth) current_depth = start_depth; else break;
 
-      for(i = 0; i < found->value.size(); i++) {
-        nodes.push(found->value[i]);
-        depth.push(start_depth + 1);
+      if(found) {
+        for(i = 0; i < found->value.size(); i++) {
+          nodes.push(found->value[i]);
+          depth.push(start_depth + 1);
+        }
       }
     }
 
