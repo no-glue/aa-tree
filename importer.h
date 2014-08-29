@@ -1,6 +1,7 @@
 #include "aa_tree.h"
 #include "decorator_max_depth.h"
 #include "decorator_average_path_length.h"
+#include "decorator_bfs_message.h"
 
 class Importer {
 public:
@@ -72,7 +73,7 @@ public:
 
     return (2 * e) / (float)(n);
   }
-  template<typename T> float breadth_first_search(AaTree * & tree, T * & decorator, string start_node = "1", int start_depth = 1) {
+  template<typename Ret, typename Message> float breadth_first_search(AaTree * & tree, Ret * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
     // breadth first search
     // todo decorate this
     AaNode * found = tree->find(start_node);
@@ -96,6 +97,8 @@ public:
       depth.pop();
       length += start_depth;
       ret = decorator->return_is(ret, edges, length);
+
+      decorator_message->message(ret, edges, length);
 
       if(found) {
         for(i = 0; i < found->value.size(); i++) {
