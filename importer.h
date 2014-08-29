@@ -1,4 +1,5 @@
 #include "aa_tree.h"
+#include "decorator_max_depth.h"
 
 class Importer {
 public:
@@ -101,7 +102,7 @@ public:
 
     return current_depth;
   }
-  int depth_first_search(AaTree * & tree, string start_node = "1", int start_depth = 1) {
+  int depth_first_search(AaTree * & tree, DecoratorMaxDepth * & decorator, string start_node = "1", int start_depth = 1) {
     // find max depth
     // todo decorate this
     AaNode * found = tree->find(start_node);
@@ -120,7 +121,8 @@ public:
       nodes.pop();
       start_depth = depth.top();
       depth.pop();
-      if(start_depth > current_depth) current_depth = start_depth; else break;
+      if(decorator->run_condition(start_depth, current_depth)) current_depth = start_depth;
+      else break;
 
       if(found) {
         for(i = 0; i < found->value.size(); i++) {
