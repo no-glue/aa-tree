@@ -70,6 +70,37 @@ public:
 
     return (2 * e) / (float)(n);
   }
+  int breadth_first_search(AaTree * & tree, string start_node = "1", int start_depth = 1) {
+    // breadth first search
+    // todo decorate this
+    AaNode * found = tree->find(start_node);
+    int i = 0;
+    queue<string> nodes;
+    queue<int> depth;
+    int current_depth = 0;
+
+    for(; i < found->value.size(); i++) {
+      nodes.push(found->value[i]);
+      depth.push(start_depth);
+    }
+
+    while(!nodes.empty()) {
+      found = tree->find(nodes.front());
+      nodes.pop();
+      start_depth = depth.front();
+      depth.pop();
+      if(start_depth > current_depth) current_depth = start_depth; else break;
+
+      if(found) {
+        for(i = 0; i < found->value.size(); i++) {
+          nodes.push(found->value[i]);
+          depth.push(start_depth + 1);
+        }
+      }
+    }
+
+    return current_depth;
+  }
   int depth_first_search(AaTree * & tree, string start_node = "1", int start_depth = 1) {
     // find max depth
     // todo decorate this

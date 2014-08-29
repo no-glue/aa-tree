@@ -12,6 +12,8 @@ int main() {
   // todo move this to component
   cout<<"average degree: "<<importer->average_degree(tree)<<endl;
   // todo move this to component
+  cout<<"average path length: "<<importer->breadth_first_search(tree)<<endl;
+  // todo move this to component
   cout<<"network diameter: "<<importer->depth_first_search(tree)<<endl;
   // todo move this to component
   // todo make this a server

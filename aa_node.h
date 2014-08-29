@@ -6,6 +6,7 @@
 #include <string>
 #include <assert.h>
 #include <dirent.h>
+#include <queue>
 #include <stack>
 
 using namespace std;
