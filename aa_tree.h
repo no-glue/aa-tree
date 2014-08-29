@@ -1,6 +1,7 @@
 #include "aa_node.h"
 
 class AaTree {
+  // todo template this
 public:
   AaTree():root(NULL) {}
   ~AaTree() {make_empty(root); delete root;}
@@ -32,6 +33,10 @@ public:
   int level() {
     // get root level (tree height)
     return root->level;
+  }
+  template<typename Visitor> void walk(Visitor * & visitor) {
+    // walk the tree, preorder
+    walk(visitor, root);
   }
 private:
   AaNode * root;
@@ -124,5 +129,11 @@ private:
       if(look && key > look->key) look = look->right;
     }
     return NULL;
+  }
+  template<typename Visitor> void walk(Visitor * & visitor, AaNode * & root) {
+    // walk the tree, preorder
+    if(root->left) walk(visitor, root->left);
+    visitor->visit(root);
+    if(root->right) walk(visitor, root->right);
   }
 };
