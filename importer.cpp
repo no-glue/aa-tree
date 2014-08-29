@@ -10,7 +10,8 @@ int main() {
   DecoratorMaxDepth * max_depth = new DecoratorMaxDepth();
   DecoratorAveragePathLength * av_path_len = new DecoratorAveragePathLength();
   DecoratorBfsMessage * bfs_message = new DecoratorBfsMessage();
-  importer->import("../../node/netmark/data/split/", tree);
+  importer->import("../../node/netmark/data_live_journal/split/", tree);
+  // todo use first data set
   cout<<"nodes: "<<importer->nodes(tree)<<endl;
   // todo move this to component
   cout<<"edges: "<<importer->edges(tree)<<endl;

@@ -26,6 +26,6 @@ BOOST_PYTHON_MODULE(AaTree) {
   .def("remove_key", remove_key)
   .def("find_key", find_key, return_value_policy<manage_new_object>())
   .def("visited", visited)
-  .def("visited", is_visited)
+  .def("is_visited", is_visited)
   .def("level", level);
 };
