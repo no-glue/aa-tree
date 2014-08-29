@@ -102,7 +102,7 @@ public:
 
     return current_depth;
   }
-  int depth_first_search(AaTree * & tree, DecoratorMaxDepth * & decorator, string start_node = "1", int start_depth = 1) {
+  template<typename T> int depth_first_search(AaTree * & tree, T * & decorator, string start_node = "1", int start_depth = 1) {
     // find max depth
     // todo decorate this
     AaNode * found = tree->find(start_node);
