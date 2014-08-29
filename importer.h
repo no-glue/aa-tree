@@ -2,6 +2,7 @@
 #include "decorator_max_depth.h"
 #include "decorator_average_path_length.h"
 #include "decorator_bfs_message.h"
+#include "decorator_dfs_message.h"
 
 class Importer {
 public:
@@ -73,10 +74,10 @@ public:
 
     return (2 * e) / (float)(n);
   }
-  template<typename Ret, typename Message> float breadth_first_search(AaTree * & tree, Ret * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
+  template<typename Tree, typename Ret, typename Message> float breadth_first_search(Tree * & tree, Ret * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
     // breadth first search
     // todo decorate this
-    AaNode * found = tree->find(start_node);
+    AaNode * next = tree->find(start_node);
     int i = 0;
     queue<string> nodes;
     queue<int> depth;
@@ -84,13 +85,14 @@ public:
     int length = 0;
     float ret = 0;
 
-    for(; i < found->value.size(); i++) {
-      nodes.push(found->value[i]);
+    for(; i < next->value.size(); i++) {
+      nodes.push(next->value[i]);
       depth.push(start_depth);
+      tree->visited(next->value[i]);
     }
 
     while(!nodes.empty()) {
-      found = tree->find(nodes.front());
+      next = tree->find(nodes.front());
       nodes.pop();
       edges++;
       start_depth = depth.front();
@@ -100,17 +102,20 @@ public:
 
       decorator_message->message(ret, edges, length);
 
-      if(found) {
-        for(i = 0; i < found->value.size(); i++) {
-          nodes.push(found->value[i]);
-          depth.push(start_depth + 1);
-        }
+      if(!next) continue;
+
+      for(i = 0; i < next->value.size(); i++) {
+        if(tree->is_visited(next->value[i])) continue;
+
+        nodes.push(next->value[i]);
+        depth.push(start_depth + 1);
+        tree->visited(next->value[i]);
       }
     }
 
     return ret;
   }
-  template<typename T> int depth_first_search(AaTree * & tree, T * & decorator, string start_node = "1", int start_depth = 1) {
+  template<typename Run, typename Message> int depth_first_search(AaTree * & tree, Run * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
     // find max depth
     // todo decorate this
     AaNode * found = tree->find(start_node);
@@ -118,6 +123,8 @@ public:
     stack<string> nodes;
     stack<int> depth;
     int current_depth = 0;
+    int edges = 0;
+    int length = 0;
 
     for(; i < found->value.size(); i++) {
       nodes.push(found->value[i]);
@@ -127,16 +134,20 @@ public:
     while(!nodes.empty()) {
       found = tree->find(nodes.top());
       nodes.pop();
+      edges++;
       start_depth = depth.top();
       depth.pop();
-      if(decorator->run_condition(start_depth, current_depth)) current_depth = start_depth;
-      else break;
+      length += start_depth;
+      // if(decorator->run_condition(start_depth, current_depth)) current_depth = start_depth;
+      // else break;
 
-      if(found) {
-        for(i = 0; i < found->value.size(); i++) {
-          nodes.push(found->value[i]);
-          depth.push(start_depth + 1);
-        }
+      decorator_message->message(edges, nodes.size());
+
+      if(!found) continue;
+
+      for(i = 0; i < found->value.size(); i++) {
+        nodes.push(found->value[i]);
+        depth.push(start_depth + 1);
       }
     }
 

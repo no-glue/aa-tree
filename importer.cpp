@@ -16,10 +16,6 @@ int main() {
   cout<<"average degree: "<<importer->average_degree(tree)<<endl;
   // todo move this to component
   cout<<"average path length: "<<importer->breadth_first_search(tree, av_path_len, bfs_message)<<endl;
-  // todo move this to component
-  cout<<"network diameter: "<<importer->depth_first_search(tree, max_depth)<<endl;
-  // todo move this to component
-  // todo make this a server
   delete bfs_message;
   delete av_path_len;
   delete max_depth;

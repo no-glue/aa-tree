@@ -8,6 +8,7 @@ void (AaTree::*insert_key)(string, string) = &AaTree::insert;
 void (AaTree::*remove_key)(string) = &AaTree::remove;
 AaNode* (AaTree::*find_key)(string) = &AaTree::find;
 void (AaTree::*visited)(string, bool) = &AaTree::visited;
+bool (AaTree::*is_visited)(string, bool) = &AaTree::is_visited;
 int (AaTree::*level)() = &AaTree::level;
 
 BOOST_PYTHON_MODULE(AaTree) {
@@ -25,5 +26,6 @@ BOOST_PYTHON_MODULE(AaTree) {
   .def("remove_key", remove_key)
   .def("find_key", find_key, return_value_policy<manage_new_object>())
   .def("visited", visited)
+  .def("visited", is_visited)
   .def("level", level);
 };

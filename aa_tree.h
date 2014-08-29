@@ -23,6 +23,12 @@ public:
 
     if(found) found->visited = flag;
   }
+  bool is_visited(string key, bool def = true) {
+    // see if node is visited
+    AaNode * found = find(key, root);
+
+    return (found) ? found->visited : def;    
+  }
   int level() {
     // get root level (tree height)
     return root->level;
