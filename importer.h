@@ -1,8 +1,4 @@
 #include "aa_tree.h"
-#include "decorator_max_depth.h"
-#include "decorator_average_path_length.h"
-#include "decorator_bfs_message.h"
-#include "decorator_dfs_message.h"
 
 class Importer {
 public:
