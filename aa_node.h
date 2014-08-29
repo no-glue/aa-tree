@@ -23,11 +23,13 @@ class AaNode {
     // right children
     int level;
     // level
-    AaNode(string key, string init_value):key(key), left(NULL), right(NULL), level(1) {
+    bool visited;
+    // is node visited, useful when searching
+    AaNode(string key, string init_value):key(key), left(NULL), right(NULL), level(1), visited(false) {
       // set up bare bones node
       value.push_back(init_value);
     }
-    AaNode(string key, string init_value, AaNode * left, AaNode * right, int level):key(key), left(left), right(right), level(level) {
+    AaNode(string key, string init_value, AaNode * left, AaNode * right, int level, bool visited):key(key), left(left), right(right), level(level), visited(visited) {
       // set up node
       value.push_back(init_value);
     }

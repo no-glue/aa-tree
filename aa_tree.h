@@ -17,6 +17,12 @@ public:
     // find key
     return find(key, root);
   }
+  void visited(string key, bool flag = false) {
+    // mark node as visited
+    AaNode * found = find(key, root);
+
+    if(found) found->visited = flag;
+  }
   int level() {
     // get root level (tree height)
     return root->level;
