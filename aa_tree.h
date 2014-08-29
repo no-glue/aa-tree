@@ -17,7 +17,7 @@ public:
     // find key
     return find(key, root);
   }
-  void visited(string key, bool flag = false) {
+  void visited(string key, bool flag = true) {
     // mark node as visited
     AaNode * found = find(key, root);
 
