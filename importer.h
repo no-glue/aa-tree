@@ -1,5 +1,6 @@
 #include "aa_tree.h"
 #include "decorator_max_depth.h"
+#include "decorator_average_path_length.h"
 
 class Importer {
 public:
@@ -71,13 +72,16 @@ public:
 
     return (2 * e) / (float)(n);
   }
-  int breadth_first_search(AaTree * & tree, string start_node = "1", int start_depth = 1) {
+  template<typename T> float breadth_first_search(AaTree * & tree, T * & decorator, string start_node = "1", int start_depth = 1) {
     // breadth first search
     // todo decorate this
     AaNode * found = tree->find(start_node);
     int i = 0;
     queue<string> nodes;
     queue<int> depth;
+    int edges = 0;
+    int length = 0;
+    float ret = 0;
 
     for(; i < found->value.size(); i++) {
       nodes.push(found->value[i]);
@@ -87,8 +91,11 @@ public:
     while(!nodes.empty()) {
       found = tree->find(nodes.front());
       nodes.pop();
+      edges++;
       start_depth = depth.front();
       depth.pop();
+      length += start_depth;
+      ret = decorator->return_is(ret, edges, length);
 
       if(found) {
         for(i = 0; i < found->value.size(); i++) {
@@ -98,7 +105,7 @@ public:
       }
     }
 
-    return current_depth;
+    return ret;
   }
   template<typename T> int depth_first_search(AaTree * & tree, T * & decorator, string start_node = "1", int start_depth = 1) {
     // find max depth
