@@ -21,10 +21,10 @@ int main() {
   // todo move this to component
   cout<<"average degree: "<<importer->average_degree(tree)<<endl;
   // todo move this to component
-  cout<<"average path length: "<<importer->breadth_first_search<AaTree, DecoratorAveragePathLength, DecoratorBfsMessage>(tree, av_path_len, bfs_message)<<endl;
+  cout<<"average path length: "<<importer->breadth_first_search<AaNode, queue<string>, queue<int>, AaTree, DecoratorAveragePathLength, DecoratorBfsMessage>(tree, av_path_len, bfs_message)<<endl;
   // todo move this to component
   tree->walk(not_seen);
-  cout<<"network diameter: "<<importer->breadth_first_search<AaTree, DecoratorMaxDepth, DecoratorBfsMessage>(tree, get_max_depth, bfs_message)<<endl;
+  cout<<"network diameter: "<<importer->breadth_first_search<AaNode, queue<string>, queue<int>, AaTree, DecoratorMaxDepth, DecoratorBfsMessage>(tree, get_max_depth, bfs_message)<<endl;
   // todo move this to component
   delete get_max_depth;
   delete not_seen;

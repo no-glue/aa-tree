@@ -70,13 +70,13 @@ public:
 
     return (2 * e) / (float)(n);
   }
-  template<class Tree, class Ret, class Message> float breadth_first_search(Tree * & tree, Ret * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
+  template<class Node, typename Qstr, typename Qint, class Tree, class Ret, class Message> float breadth_first_search(Tree * & tree, Ret * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
     // breadth first search
     // todo decorate this
-    AaNode * next = tree->find(start_node);
+    Node * next = tree->find(start_node);
     int i = 0;
-    queue<string> nodes;
-    queue<int> depth;
+    Qstr nodes;
+    Qint depth;
     int edges = 0;
     int length = 0;
     int current_depth = 0;
