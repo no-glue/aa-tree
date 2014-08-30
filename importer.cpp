@@ -1,4 +1,4 @@
-#include "importer.h"
+#include "aa_tree.h"
 #include "metrics.h"
 #include "decorator_average_path_length.h"
 #include "decorator_bfs_message.h"
@@ -6,14 +6,12 @@
 #include "decorator_max_depth.h"
 
 int main() {
-  AaTree * tree = new AaTree();
-  Importer * importer = new Importer();
-  Metrics<AaNode, AaTree> * metrics = new Metrics<AaNode, AaTree>();
+  AaTree<AaNode, string> * tree = new AaTree<AaNode, string>();
+  Metrics<AaNode, AaTree<AaNode, string> > * metrics = new Metrics<AaNode, AaTree<AaNode, string> >();
   DecoratorAveragePathLength * av_path_len = new DecoratorAveragePathLength();
   DecoratorBfsMessage * bfs_message = new DecoratorBfsMessage();
   DecoratorNotSeen * not_seen = new DecoratorNotSeen();
   DecoratorMaxDepth * get_max_depth = new DecoratorMaxDepth();
-  importer->import("../../node/netmark/data_live_journal/split/", tree);
   // todo use first data set
   cout<<"nodes: "<<metrics->nodes(tree)<<endl;
   // todo move this to component
@@ -33,7 +31,6 @@ int main() {
   delete bfs_message;
   delete av_path_len;
   delete metrics;
-  delete importer;
   delete tree;
   return 0;
 }

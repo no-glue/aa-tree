@@ -1,32 +1,32 @@
 #include "aa_node.h"
 
-class AaTree {
+template<class Node, typename Str>class AaTree {
   // todo template this
 public:
   AaTree():root(NULL) {}
   ~AaTree() {make_empty(root); delete root;}
-  void insert(string key, string value) {
+  void insert(Str key, Str value) {
     // insert key and value
     insert(key, value, root);
   }
-  void remove(string key) {
+  void remove(Str key) {
     // remove node
     if(root && !root->left && !root->right && root->key == key) {delete root; root = NULL;}
     else remove(key, root);
   }
-  AaNode * find(string key) {
+  Node * find(Str key) {
     // find key
     return find(key, root);
   }
-  void visited(string key, bool flag = true) {
+  void visited(Str key, bool flag = true) {
     // mark node as visited
-    AaNode * found = find(key, root);
+    Node * found = find(key, root);
 
     if(found) found->visited = flag;
   }
-  bool is_visited(string key, bool def = true) {
+  bool is_visited(Str key, bool def = true) {
     // see if node is visited
-    AaNode * found = find(key, root);
+    Node * found = find(key, root);
 
     return (found) ? found->visited : def;    
   }
@@ -39,43 +39,43 @@ public:
     walk(visitor, root);
   }
 private:
-  AaNode * root;
-  void insert(string key, string value, AaNode * & root) {
+  Node * root;
+  void insert(Str key, Str value, Node * & root) {
     // insert key and value
-    if(!root) root = new AaNode(key, value);
+    if(!root) root = new Node(key, value);
     else if (key < root->key) insert(key, value, root->left);
     else if(key > root->key) insert(key, value, root->right);
     else root->value.push_back(value);
     skew(root);
     split(root);
   }
-  void skew(AaNode * & root) {
+  void skew(Node * & root) {
     // skew tree, rotate right (with left child)
     if(!root) return;
     if(!root->left) return;
     if(root->level == root->left->level) {
-      AaNode * return_node = root->left;
+      Node * return_node = root->left;
       root->left = return_node->right;
       return_node->right = root;
       root = return_node;
     }
   }
-  void split(AaNode * & root) {
+  void split(Node * & root) {
     // split tree, rotate left (with right child)
     if(!root) return;
     if(!root->right) return;
     if(!root->right->right) return;
     if(root->right->right->level == root->level) {
-      AaNode * return_node = root->right;
+      Node * return_node = root->right;
       root->right = return_node->left;
       return_node->left = root;
       return_node->level++;
       root = return_node;
     }
   }
-  void remove(string key, AaNode * & root) {
+  void remove(Str key, Node * & root) {
     // remove node
-    static AaNode * to_remove;
+    static Node * to_remove;
     if (!root) return;
     else if (key < root->key) remove(key, root->left);
     else if (key > root->key) remove(key, root->right);
@@ -101,7 +101,7 @@ private:
     split(root);
     split(root->right);
   }
-  void decrease_level(AaNode * & root) {
+  void decrease_level(Node * & root) {
     // decrease level of node
     if(!root) return;
     int left = (root->left) ? root->left->level : 1, right = (root->right) ? root->right->level : 1;
@@ -111,7 +111,7 @@ private:
       if(root->right && should_be < root->right->level) root->right->level = should_be;
     }
   }
-  void make_empty(AaNode * & root) {
+  void make_empty(Node * & root) {
     // make tree empty
     if(root) {
       make_empty(root->left);
@@ -120,9 +120,9 @@ private:
     }
     root = NULL;
   }
-  AaNode * find(string key, AaNode * & root) {
+  Node * find(Str key, Node * & root) {
     // find key
-    AaNode * look = root;
+    Node * look = root;
     while(look) {
       if(look && look->key == key) return look;
       if(look && key < look->key) look = look->left;
@@ -130,7 +130,7 @@ private:
     }
     return NULL;
   }
-  template<typename Visitor> void walk(Visitor * & visitor, AaNode * & root) {
+  template<typename Visitor> void walk(Visitor * & visitor, Node * & root) {
     // walk the tree, preorder
     if(root->left) walk(visitor, root->left);
     visitor->visit(root);
