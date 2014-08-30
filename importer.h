@@ -1,18 +1,17 @@
-template<class Generator, typename Str, typename Ifstream, typename Streamsize, typename VectorUchar, typename Ios, typename Ostream>class Importer {
+template<class Generator, typename Str, typename Ifstream, typename Ostream>class Importer {
 public:
   void import(Generator * & generator, Ostream & out) {
     // todo move out to decorator
     Str file_name("");
     Ifstream file;
-    Streamsize size;
-    VectorUchar buffer;
+    Str from, to;
 
     while((file_name = generator->file_is()) != "") {
       file.open(file_name.c_str(), Ifstream::in);
-      file.seekg(0, Ios::end);
-      size = file.tellg();
-      file.seekg(0, Ios::beg);
-      out<<file_name<<"\n";
+      while(file>>from>>to) {
+        out<<from<<" "<<to<<"\n";
+      }
+      file.close();
     }
 
     generator->close();
