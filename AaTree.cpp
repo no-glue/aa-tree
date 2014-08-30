@@ -26,15 +26,15 @@ int (AaTree<AaNode<string, vector<string> >, string >::*level)() = &AaTree<AaNod
 void (AaTree<AaNode<string, vector<string> >, string >::*walk)(DecoratorNotSeen * &) = &AaTree<AaNode<string, vector<string> >, string >::walk<DecoratorNotSeen>;
 
 BOOST_PYTHON_MODULE(AaTree) {
-  // class_<std::vector<string> >("aa_tree_value")
-  // .def(vector_indexing_suite<vector<string> >());
-  // class_<AaNode>("AaNode", init<string, string>())
-  // .def_readwrite("key", &AaNode::key)
-  // .def_readwrite("value", &AaNode::value)
-  // .def_readwrite("left", &AaNode::left)
-  // .def_readwrite("right", &AaNode::right)
-  // .def_readwrite("level", &AaNode::level)
-  // .def_readwrite("visited", &AaNode::visited);
+  class_<std::vector<string> >("aa_tree_value")
+  .def(vector_indexing_suite<vector<string> >());
+  class_<AaNode<string, vector<string> > >("AaNode", init<string, string>())
+  .def_readwrite("key", &AaNode<string, vector<string> >::key)
+  .def_readwrite("value", &AaNode<string, vector<string> >::value)
+  .def_readwrite("left", &AaNode<string, vector<string> >::left)
+  .def_readwrite("right", &AaNode<string, vector<string> >::right)
+  .def_readwrite("level", &AaNode<string, vector<string> >::level)
+  .def_readwrite("visited", &AaNode<string, vector<string> >::visited);
   class_<AaTree<AaNode<string, vector<string> >, string> >("AaTree")
   .def("insert_key", insert_key)
   .def("remove_key", remove_key)
