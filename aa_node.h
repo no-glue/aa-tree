@@ -1,21 +1,8 @@
-#include <cstring>
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <assert.h>
-#include <dirent.h>
-#include <queue>
-#include <stack>
-
-using namespace std;
-
-class AaNode {
+template<typename VectorString, typename Str>class AaNode {
   public:
-    string key;
+    Str key;
     // key for this node
-    vector<string> value;
+    VectorString value;
     // values for this node
     AaNode * left;
     // left children
@@ -25,11 +12,11 @@ class AaNode {
     // level
     bool visited;
     // is node visited, useful when searching
-    AaNode(string key, string init_value):key(key), left(NULL), right(NULL), level(1), visited(false) {
+    AaNode(Str key, Str init_value):key(key), left(NULL), right(NULL), level(1), visited(false) {
       // set up bare bones node
       value.push_back(init_value);
     }
-    AaNode(string key, string init_value, AaNode * left, AaNode * right, int level, bool visited):key(key), left(left), right(right), level(level), visited(visited) {
+    AaNode(Str key, Str init_value, AaNode * left, AaNode * right, int level, bool visited):key(key), left(left), right(right), level(level), visited(visited) {
       // set up node
       value.push_back(init_value);
     }

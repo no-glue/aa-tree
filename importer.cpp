@@ -1,3 +1,14 @@
+#include <cstring>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <assert.h>
+#include <dirent.h>
+#include <queue>
+#include <stack>
+#include "aa_node.h"
 #include "aa_tree.h"
 #include "metrics.h"
 #include "decorator_average_path_length.h"
@@ -5,11 +16,13 @@
 #include "decorator_not_seen.h"
 #include "decorator_max_depth.h"
 
+using namespace std;
+
 int main() {
-  AaTree<AaNode, string> * tree = new AaTree<AaNode, string>();
-  Metrics<AaNode, AaTree<AaNode, string> > * metrics = new Metrics<AaNode, AaTree<AaNode, string> >();
+  AaTree<AaNode<vector<string>, string>, string> * tree = new AaTree<AaNode<vector<string>, string>, string>();
+  Metrics<AaNode<vector<string>, string>, AaTree<AaNode<vector<string>, string>, string> > * metrics = new Metrics<AaNode<vector<string>, string>, AaTree<AaNode<vector<string>, string>, string> >();
   DecoratorAveragePathLength * av_path_len = new DecoratorAveragePathLength();
-  DecoratorBfsMessage * bfs_message = new DecoratorBfsMessage();
+  DecoratorBfsMessage<ostream> * bfs_message = new DecoratorBfsMessage<ostream>(cout);
   DecoratorNotSeen * not_seen = new DecoratorNotSeen();
   DecoratorMaxDepth * get_max_depth = new DecoratorMaxDepth();
   // todo use first data set
@@ -21,10 +34,10 @@ int main() {
   // todo move this to component
   cout<<"average degree: "<<metrics->average_degree(tree)<<endl;
   // todo move this to component
-  cout<<"average path length: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorAveragePathLength, DecoratorBfsMessage>(tree, av_path_len, bfs_message)<<endl;
+  cout<<"average path length: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorAveragePathLength, DecoratorBfsMessage<ostream>, string>(tree, av_path_len, bfs_message)<<endl;
   // todo move this to component
   tree->walk(not_seen);
-  cout<<"network diameter: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorMaxDepth, DecoratorBfsMessage>(tree, get_max_depth, bfs_message)<<endl;
+  cout<<"network diameter: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorMaxDepth, DecoratorBfsMessage<ostream>, string>(tree, get_max_depth, bfs_message)<<endl;
   // todo move this to component
   delete get_max_depth;
   delete not_seen;

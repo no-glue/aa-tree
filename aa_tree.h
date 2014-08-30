@@ -1,5 +1,3 @@
-#include "aa_node.h"
-
 template<class Node, typename Str>class AaTree {
   // todo template this
 public:
@@ -135,5 +133,9 @@ private:
     if(root->left) walk(visitor, root->left);
     visitor->visit(root);
     if(root->right) walk(visitor, root->right);
+  }
+  int min(int left, int right) {
+    // find min
+    return (left <= right) ? left : right;
   }
 };
