@@ -1,15 +1,7 @@
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
-#include <cstring>
 #include <vector>
-#include <algorithm>
-#include <iostream>
-#include <fstream>
 #include <string>
-#include <assert.h>
-#include <dirent.h>
-#include <queue>
-#include <stack>
 #include "aa_node.h"
 #include "aa_tree.h"
 #include "decorator_not_seen.h"
