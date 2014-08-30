@@ -10,7 +10,7 @@ int main() {
   DecoratorAveragePathLength * av_path_len = new DecoratorAveragePathLength();
   DecoratorBfsMessage * bfs_message = new DecoratorBfsMessage();
   DecoratorNotSeen * not_seen = new DecoratorNotSeen();
-  DecoratorMaxDepth * get_max_depth = new DecoratorDfsMaxDepth();
+  DecoratorMaxDepth * get_max_depth = new DecoratorMaxDepth();
   importer->import("../../node/netmark/data_live_journal/split/", tree);
   // todo use first data set
   cout<<"nodes: "<<importer->nodes(tree)<<endl;

@@ -44,17 +44,17 @@ public:
     }
     closedir(dir);
   }
-  int nodes(AaTree * & tree) {
+  template<class Tree> int nodes(Tree * & tree) {
     // get number of nodes
     // todo move this to another component
     return stoi(tree->find("nodes")->value[0]);
   }
-  int edges(AaTree * & tree) {
+  template<class Tree> int edges(Tree * & tree) {
     // get number of edges
     // todo move this to another component
     return stoi(tree->find("edges")->value[0]);
   }
-  double density(AaTree * & tree) {
+  template<class Tree> double density(Tree * & tree) {
     // network density
     // todo move this to another component
     double e = (double)stoi(tree->find("edges")->value[0]);
@@ -62,7 +62,7 @@ public:
 
     return (2 * e) / (n * (n - 1));
   }
-  float average_degree(AaTree * & tree) {
+  template<class Tree> float average_degree(Tree * & tree) {
     // average number of edges for a node
     // todo move this to another component
     int e = stoi(tree->find("edges")->value[0]);
@@ -70,7 +70,7 @@ public:
 
     return (2 * e) / (float)(n);
   }
-  template<typename Tree, typename Ret, typename Message> float breadth_first_search(Tree * & tree, Ret * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
+  template<class Tree, class Ret, class Message> float breadth_first_search(Tree * & tree, Ret * & decorator, Message * & decorator_message, string start_node = "1", int start_depth = 1) {
     // breadth first search
     // todo decorate this
     AaNode * next = tree->find(start_node);
