@@ -1,16 +1,19 @@
-template<class Generator, typename Str, typename Ifstream, typename Ostream>class Importer {
+template<class Generator, class Tree, typename Str, typename Ifstream, typename Ostream>class Importer {
 public:
-  void import(Generator * & generator, Ostream & out) {
+  void import(Generator * & generator, Tree * & tree, Ostream & out) {
     // todo move out to decorator
     Str file_name("");
     Ifstream file;
     Str from, to;
+    int count = 1;
 
     while((file_name = generator->file_is()) != "") {
       file.open(file_name.c_str(), Ifstream::in);
       while(file>>from>>to) {
-        out<<from<<" "<<to<<"\n";
+        tree->insert(from, to);
       }
+      out<<"Loaded file "<<file_name<<" "<<count<<"\n";
+      count++;
       file.close();
     }
 
