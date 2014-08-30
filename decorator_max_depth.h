@@ -1,7 +1,8 @@
 class DecoratorMaxDepth {
 public:
-  bool run_condition(int start_depth, int current_depth) {
-    // stop dfs if maximum depth
-    return start_depth > current_depth;
+  float return_is(float ret, int & edges, int & length, int & start_depth, int & current_depth) {
+    if(current_depth < start_depth) current_depth = start_depth;
+
+    return current_depth;
   }
 };

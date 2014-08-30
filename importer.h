@@ -79,6 +79,7 @@ public:
     queue<int> depth;
     int edges = 0;
     int length = 0;
+    int current_depth = 0;
     float ret = 0;
 
     for(; i < next->value.size(); i++) {
@@ -90,11 +91,9 @@ public:
     while(!nodes.empty()) {
       next = tree->find(nodes.front());
       nodes.pop();
-      edges++;
       start_depth = depth.front();
       depth.pop();
-      length += start_depth;
-      ret = decorator->return_is(ret, edges, length);
+      ret = decorator->return_is(ret, edges, length, start_depth, current_depth);
 
       decorator_message->message(ret, edges, length);
 
@@ -103,56 +102,6 @@ public:
       for(i = 0; i < next->value.size(); i++) {
         if(tree->is_visited(next->value[i])) continue;
 
-        nodes.push(next->value[i]);
-        depth.push(start_depth + 1);
-        tree->visited(next->value[i]);
-      }
-    }
-
-    return ret;
-  }
-  template<typename Ret, typename Run, typename Message> float depth_first_search(
-    AaTree * & tree,
-    Ret * & decorator,  
-    Run * & decorator_run, 
-    Message * & decorator_message, 
-    string start_node = "1", 
-    int start_depth = 1) {
-    // find max depth
-    // todo decorate this
-    AaNode * next = tree->find(start_node);
-    int i = 0;
-    stack<string> nodes;
-    stack<int> depth;
-    int current_depth = 0;
-    int edges = 0;
-    int length = 0;
-    float ret = 0;
-
-    for(; i < next->value.size(); i++) {
-      nodes.push(next->value[i]);
-      depth.push(start_depth);
-      tree->visited(next->value[i]);
-    }
-
-    while(!nodes.empty()) {
-      next = tree->find(nodes.top());
-      nodes.pop();
-      edges++;
-      start_depth = depth.top();
-      depth.pop();
-      length += start_depth;
-      if(decorator_run->run_condition(start_depth, current_depth)) current_depth = start_depth;
-      else break;
-
-      decorator_message->message(edges, nodes.size());
-
-      ret = decorator->return_is(ret, edges, length, current_depth);
-
-      if(!next) continue;
-
-      for(i = 0; i < next->value.size(); i++) {
-        if(tree->is_visited(next->value[i])) continue;
         nodes.push(next->value[i]);
         depth.push(start_depth + 1);
         tree->visited(next->value[i]);
