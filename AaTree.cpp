@@ -26,6 +26,8 @@ int (AaTree<AaNode<string, vector<string> >, string >::*level)() = &AaTree<AaNod
 void (AaTree<AaNode<string, vector<string> >, string >::*walk)(DecoratorNotSeen * &) = &AaTree<AaNode<string, vector<string> >, string >::walk<DecoratorNotSeen>;
 
 BOOST_PYTHON_MODULE(AaTree) {
+  class_<DecoratorNotSeen>("DecoratorNotSeen").
+  def("visit", &DecoratorNotSeen::visit<AaNode<string, vector<string> > >);
   class_<std::vector<string> >("aa_tree_value")
   .def(vector_indexing_suite<vector<string> >());
   class_<AaNode<string, vector<string> > >("AaNode", init<string, string>())
