@@ -1,4 +1,4 @@
-template<typename VectorString, typename Str>class AaNode {
+template<typename Str, typename VectorString>class AaNode {
   public:
     Str key;
     // key for this node
