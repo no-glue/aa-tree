@@ -15,16 +15,25 @@
 #include "decorator_bfs_message.h"
 #include "decorator_not_seen.h"
 #include "decorator_max_depth.h"
+#include "decorator_file_read.h"
+#include "generator_file.h"
+#include "importer.h"
 
 using namespace std;
 
 int main() {
-  AaTree<AaNode<vector<string>, string>, string> * tree = new AaTree<AaNode<vector<string>, string>, string>();
-  Metrics<AaNode<vector<string>, string>, AaTree<AaNode<vector<string>, string>, string> > * metrics = new Metrics<AaNode<vector<string>, string>, AaTree<AaNode<vector<string>, string>, string> >();
+  string line;
+  getline(cin, line);
+  AaTree<AaNode<string, vector<string> >, string> * tree = new AaTree<AaNode<string, vector<string> >, string>();
+  Metrics<AaNode<string, vector<string> >, AaTree<AaNode<string, vector<string> >, string> > * metrics = new Metrics<AaNode<string, vector<string> >, AaTree<AaNode<string, vector<string> >, string> >();
   DecoratorAveragePathLength * av_path_len = new DecoratorAveragePathLength();
   DecoratorBfsMessage<ostream> * bfs_message = new DecoratorBfsMessage<ostream>(cout);
   DecoratorNotSeen * not_seen = new DecoratorNotSeen();
   DecoratorMaxDepth * get_max_depth = new DecoratorMaxDepth();
+  GeneratorFile<ifstream, string> * files = new GeneratorFile<ifstream, string>(line);
+  DecoratorFileRead<ostream, string> * file_read = new DecoratorFileRead<ostream, string>(cout);
+  Importer<GeneratorFile<ifstream, string>, AaTree<AaNode<string, vector<string> >, string>, DecoratorFileRead<ostream, string>, string, ifstream> * importer = new Importer<GeneratorFile<ifstream, string>, AaTree<AaNode<string, vector<string> >, string>, DecoratorFileRead<ostream, string>, string, ifstream>();
+  importer->import(files, tree, file_read);
   // todo use first data set
   cout<<"nodes: "<<metrics->nodes(tree)<<endl;
   // todo move this to component
@@ -39,6 +48,9 @@ int main() {
   tree->walk(not_seen);
   cout<<"network diameter: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorMaxDepth, DecoratorBfsMessage<ostream>, string>(tree, get_max_depth, bfs_message)<<endl;
   // todo move this to component
+  delete files;
+  delete file_read;
+  delete importer;
   delete get_max_depth;
   delete not_seen;
   delete bfs_message;

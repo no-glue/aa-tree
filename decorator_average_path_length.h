@@ -4,6 +4,6 @@ public:
     // find average path length
     edges++;
     length+=start_depth;
-    return edges / (float)length;
+    return length / (float)edges;
   }
 };
