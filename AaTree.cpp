@@ -15,7 +15,9 @@ AaNode<string, vector<string> >* (AaTree<AaNode<string, vector<string> >, string
 void (AaTree<AaNode<string, vector<string> >, string >::*visited)(string, bool) = &AaTree<AaNode<string, vector<string> >, string >::visited;
 bool (AaTree<AaNode<string, vector<string> >, string >::*is_visited)(string, bool) = &AaTree<AaNode<string, vector<string> >, string >::is_visited;
 int (AaTree<AaNode<string, vector<string> >, string >::*level)() = &AaTree<AaNode<string, vector<string> >, string >::level;
-void (AaTree<AaNode<string, vector<string> >, string >::*walk)(DecoratorNotSeen * &) = &AaTree<AaNode<string, vector<string> >, string >::walk<DecoratorNotSeen>;
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(visited_default, visited, 1, 2);
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(is_visited_default, is_visited, 1, 2);
 
 BOOST_PYTHON_MODULE(AaTree) {
   class_<DecoratorNotSeen>("DecoratorNotSeen").
@@ -33,8 +35,7 @@ BOOST_PYTHON_MODULE(AaTree) {
   .def("insert_key", insert_key)
   .def("remove_key", remove_key)
   .def("find_key", find_key, return_value_policy<manage_new_object>())
-  .def("visited", visited)
-  .def("is_visited", is_visited)
-  .def("level", level)
-  .def("walk", walk);
+  .def("visited", visited, visited_default())
+  .def("is_visited", is_visited, is_visited_default())
+  .def("level", level);
 };
