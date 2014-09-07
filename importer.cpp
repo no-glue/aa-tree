@@ -4,6 +4,7 @@
 #include <string>
 #include <queue>
 #include <stack>
+#include <time.h>
 #include "aa_node.h"
 #include "aa_tree.h"
 #include "metrics.h"
@@ -30,6 +31,7 @@ int main() {
   DecoratorFileRead<ostream, string> * file_read = new DecoratorFileRead<ostream, string>(cout);
   Importer<GeneratorFile<ifstream, string>, AaTree<AaNode<string, vector<string> >, string>, DecoratorFileRead<ostream, string>, string, ifstream> * importer = new Importer<GeneratorFile<ifstream, string>, AaTree<AaNode<string, vector<string> >, string>, DecoratorFileRead<ostream, string>, string, ifstream>();
   importer->import(files, tree, file_read);
+  time_t now = time(NULL), then;
   // todo use first data set
   cout<<"nodes: "<<metrics->nodes(tree)<<endl;
   // todo move this to component
@@ -44,6 +46,8 @@ int main() {
   tree->walk(not_seen);
   cout<<"network diameter: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorMaxDepth, DecoratorBfsMessage<ostream>, string>(tree, get_max_depth, bfs_message)<<endl;
   // todo move this to component
+  then = time(NULL);
+  cout<<"seconds: "<<difftime(now, then)<<endl;
   delete files;
   delete file_read;
   delete importer;
