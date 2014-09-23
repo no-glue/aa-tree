@@ -8,7 +8,7 @@ template<typename Str, typename VectorString>class AaNode {
     // left children
     AaNode * right;
     // right children
-    int level;
+    unsigned char level;
     // level
     bool visited;
     // is node visited, useful when searching
@@ -16,7 +16,7 @@ template<typename Str, typename VectorString>class AaNode {
       // set up bare bones node
       value.push_back(init_value);
     }
-    AaNode(Str key, Str init_value, AaNode * left, AaNode * right, int level, bool visited):key(key), left(left), right(right), level(level), visited(visited) {
+    AaNode(Str key, Str init_value, AaNode * left, AaNode * right, unsigned char level, bool visited):key(key), left(left), right(right), level(level), visited(visited) {
       // set up node
       value.push_back(init_value);
     }

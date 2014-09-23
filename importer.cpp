@@ -41,10 +41,10 @@ int main() {
   // todo move this to component
   cout<<"average degree: "<<metrics->average_degree(tree)<<endl;
   // todo move this to component
-  cout<<"average path length: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorAveragePathLength, DecoratorBfsMessage<ostream>, string>(tree, av_path_len, bfs_message)<<endl;
+  cout<<"average path length: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorAveragePathLength, DecoratorBfsMessage<ostream>, string>(tree, av_path_len, bfs_message, "-1")<<endl;
   // todo move this to component
   tree->walk(not_seen);
-  cout<<"network diameter: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorMaxDepth, DecoratorBfsMessage<ostream>, string>(tree, get_max_depth, bfs_message)<<endl;
+  cout<<"network diameter: "<<metrics->breadth_first_search<queue<string>, queue<int>, DecoratorMaxDepth, DecoratorBfsMessage<ostream>, string>(tree, get_max_depth, bfs_message, "-1")<<endl;
   // todo move this to component
   then = time(NULL);
   cout<<"seconds: "<<difftime(now, then)<<endl;

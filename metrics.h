@@ -22,8 +22,9 @@ public:
 
     return (2 * e) / (float)(n);
   }
-  template<typename Qstr, typename Qint, class Ret, class Message, typename Str> float breadth_first_search(Tree * & tree, Ret * & decorator, Message * & decorator_message, Str start_node = "1", int start_depth = 1) {
+  template<typename Qstr, typename Qint, class Ret, class Message, typename Str> float breadth_first_search(Tree * & tree, Ret * & decorator, Message * & decorator_message, Str start_node = "1", int start_depth = 1, Str startnode = "startnode") {
     // breadth first search
+    if(start_node == "-1") start_node = tree->find(startnode);
     Node * next = tree->find(start_node);
     int i = 0;
     Qstr nodes;
