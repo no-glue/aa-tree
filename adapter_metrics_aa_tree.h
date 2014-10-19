@@ -1,10 +1,11 @@
+#define BUFFER_SIZE 128
 template<typename Type, typename Qnode, typename Qdepth, class Wrapper, class List, class Node, class Tree>class AdapterMetricsAaTree {
 public:
   AdapterMetricsAaTree() {}
   AdapterMetricsAaTree(Wrapper * & wrapper, List * & results, Tree * & tree):wrapper(wrapper), results(results), tree(tree) {}
   void collect_nodes() {
     // add number of nodes to results
-    collect_nodes(results, tree);
+    collect_nodes(wrapper, buffer, results, tree);
   }
   int nodes() {
     // get number of nodes
@@ -12,7 +13,7 @@ public:
   }
   void collect_edges() {
     // add number of edges to results
-    collect_edges(results, tree);
+    collect_edges(wrapper, buffer, results, tree);
   }
   int edges() {
     // get number of edges
@@ -20,7 +21,7 @@ public:
   }
   void collect_density() {
     // add density to results
-    collect_density(wrapper, results, tree);
+    collect_density(wrapper, buffer, results, tree);
   }
   double density() {
     // actual connections vs max connections
@@ -28,7 +29,7 @@ public:
   }
   void collect_average_degree() {
     // add average results to results
-    collect_average_degree(wrapper, results, tree);
+    collect_average_degree(wrapper, buffer, results, tree);
   }
   double average_degree() {
     // average number of edges for a node
@@ -42,25 +43,32 @@ private:
   Wrapper * wrapper;
   List * results;
   Tree * tree;
-  void collect_nodes(List * & results, Tree * & tree) {
+  char buffer[BUFFER_SIZE];
+  void collect_nodes(Wrapper * & wrapper, char * buffer, List * & results, Tree * & tree) {
     // add number of nodes to results
-    results->insert_right("nodes", tree->find("nodes")->value[0]);
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->int_to_alpha(buffer, nodes(tree));
+    results->insert_right("nodes", buffer);
   }
   int nodes(Tree * & tree) {
     // get number of nodes
     return stoi(tree->find("nodes")->value[0]);
   }
-  void collect_edges(List * & results, Tree * & tree) {
+  void collect_edges(Wrapper * & wrapper, char * buffer, List * & results, Tree * & tree) {
     // add number of edges to results
-    results->insert_right("edges", tree->find("nodes")->value[0]);
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->int_to_alpha(buffer, edges(tree));
+    results->insert_right("edges", buffer);
   }
   int edges(Tree * & tree) {
     // get number of edges
     return stoi(tree->find("edges")->value[0]);
   }
-  void collect_density(Wrapper * & wrapper, List * & results, Tree * & tree) {
+  void collect_density(Wrapper * & wrapper, char * buffer, List * & results, Tree * & tree) {
     // add density to results
-    results->insert_right("density", wrapper->to_string(density(tree)));
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->float_to_alpha(buffer, density(tree));
+    results->insert_right("density", buffer);
   }
   double density(Tree * & tree) {
     // actual connections vs max connections
@@ -68,9 +76,11 @@ private:
     double n = (double)nodes(tree);
     return (2 * e) / (n * (n - 1));
   }
-  void collect_average_degree(Wrapper * & wrapper, List * & results, Tree * & tree) {
+  void collect_average_degree(Wrapper * & wrapper, char * buffer, List * & results, Tree * & tree) {
     // add average degree to results
-    results->insert_right("average degree", wrapper->to_string(average_degree(tree)));
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->float_to_alpha(buffer, average_degree(tree));
+    results->insert_right("average degree", buffer);
   }
   double average_degree(Tree * & tree) {
     // average degree

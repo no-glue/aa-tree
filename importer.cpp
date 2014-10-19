@@ -1,7 +1,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include "string_wrapper.h"
+#include <string>
+#include "cstring_wrapper.h"
 #include <queue>
 #include <stack>
 #include <time.h>
@@ -35,13 +36,13 @@ int main() {
     string
   >();
   // tree
-  StringWrapper<double> * wrapper = new StringWrapper<double>();
+  CstringWrapper * wrapper = new CstringWrapper();
   // string helper
   AdapterMetricsAaTree<
     string,
     queue<string>,
     queue<string>,
-    StringWrapper<double>,
+    CstringWrapper,
     DoubleList<DoubleNode<string>, string>,
     AaNode<string, vector<string> >,
     AaTree<
@@ -52,7 +53,7 @@ int main() {
     string,
     queue<string>,
     queue<string>,
-    StringWrapper<double>,
+    CstringWrapper,
     DoubleList<DoubleNode<string>, string>,
     AaNode<string, vector<string> >,
     AaTree<
