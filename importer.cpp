@@ -1,7 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include <string>
+#include "string_wrapper.h"
 #include <queue>
 #include <stack>
 #include <time.h>
@@ -35,10 +35,13 @@ int main() {
     string
   >();
   // tree
+  StringWrapper<double> * wrapper = new StringWrapper<double>();
+  // string helper
   AdapterMetricsAaTree<
     string,
     queue<string>,
     queue<string>,
+    StringWrapper<double>,
     DoubleList<DoubleNode<string>, string>,
     AaNode<string, vector<string> >,
     AaTree<
@@ -49,13 +52,14 @@ int main() {
     string,
     queue<string>,
     queue<string>,
+    StringWrapper<double>,
     DoubleList<DoubleNode<string>, string>,
     AaNode<string, vector<string> >,
     AaTree<
       AaNode<string, vector<string> >,
       string
     >
-  >(results, tree);
+  >(wrapper, results, tree);
   // metrics (use it as adapter)
   GeneratorFile<
     ifstream, string
@@ -93,6 +97,14 @@ int main() {
   importer->import(files, tree, file_read);
   then = time(NULL);
   cout<<"indexing time "<<difftime(then, now)<<" seconds"<<endl;
+  metrics->collect_nodes();
+  metrics->collect_edges();
+  metrics->collect_density();
+  metrics->collect_average_degree();
+  while(results->get_head()) {
+    cout<<results->get_head()->key<<" "<<results->get_head()->value<<endl;
+    results->pop_left();
+  }
   delete results;
   delete tree;
   delete metrics;

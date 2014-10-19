@@ -1,7 +1,7 @@
-template<typename Type, typename Qnode, typename Qdepth, class List, class Node, class Tree>class AdapterMetricsAaTree {
+template<typename Type, typename Qnode, typename Qdepth, class Wrapper, class List, class Node, class Tree>class AdapterMetricsAaTree {
 public:
   AdapterMetricsAaTree() {}
-  AdapterMetricsAaTree(List * & results, Tree * & tree):results(results), tree(tree) {}
+  AdapterMetricsAaTree(Wrapper * & wrapper, List * & results, Tree * & tree):wrapper(wrapper), results(results), tree(tree) {}
   void collect_nodes() {
     // add number of nodes to results
     collect_nodes(results, tree);
@@ -20,7 +20,7 @@ public:
   }
   void collect_density() {
     // add density to results
-    collect_density(results, tree);
+    collect_density(wrapper, results, tree);
   }
   double density() {
     // actual connections vs max connections
@@ -28,7 +28,7 @@ public:
   }
   void collect_average_degree() {
     // add average results to results
-    collect_average_degree(results, tree);
+    collect_average_degree(wrapper, results, tree);
   }
   double average_degree() {
     // average number of edges for a node
@@ -39,6 +39,7 @@ public:
     breadth_first_search(results, tree);
   }
 private:
+  Wrapper * wrapper;
   List * results;
   Tree * tree;
   void collect_nodes(List * & results, Tree * & tree) {
@@ -57,9 +58,9 @@ private:
     // get number of edges
     return stoi(tree->find("edges")->value[0]);
   }
-  void collect_density(List * & results, Tree * & tree) {
+  void collect_density(Wrapper * & wrapper, List * & results, Tree * & tree) {
     // add density to results
-    results->insert_right("density", to_string(density(tree)));
+    results->insert_right("density", wrapper->to_string(density(tree)));
   }
   double density(Tree * & tree) {
     // actual connections vs max connections
@@ -67,9 +68,9 @@ private:
     double n = (double)nodes(tree);
     return (2 * e) / (n * (n - 1));
   }
-  void collect_average_degree(List * & results, Tree * & tree) {
+  void collect_average_degree(Wrapper * & wrapper, List * & results, Tree * & tree) {
     // add average degree to results
-    results->insert_right("average degree", to_string(average_degree(tree)));
+    results->insert_right("average degree", wrapper->to_string(average_degree(tree)));
   }
   double average_degree(Tree * & tree) {
     // average degree
