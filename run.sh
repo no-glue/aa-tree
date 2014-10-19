@@ -1,0 +1,1 @@
+cat subject_files_test | ./importer

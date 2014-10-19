@@ -26,6 +26,7 @@ int main() {
     DoubleNode<string>,
     string
   >();
+  // results
   AaTree<
     AaNode<string, vector<string> >,
     string
@@ -33,6 +34,7 @@ int main() {
     AaNode<string, vector<string> >,
     string
   >();
+  // tree
   AdapterMetricsAaTree<
     string,
     queue<string>,
@@ -54,8 +56,48 @@ int main() {
       string
     >
   >(results, tree);
+  // metrics (use it as adapter)
+  GeneratorFile<
+    ifstream, string
+  > * files = new GeneratorFile<
+    ifstream, string
+  >(line);
+  // get file generator
+  DecoratorFileRead<
+    ostream, string
+  > * file_read = new DecoratorFileRead<
+    ostream, string
+  >(cout);
+  // get file read messages
+  Importer<
+    GeneratorFile<ifstream, string>, 
+    AaTree<
+      AaNode<string, vector<string> >,
+      string
+    >, 
+    DecoratorFileRead<ostream, string>, 
+    string, 
+    ifstream
+  > * importer = new Importer<
+    GeneratorFile<ifstream, string>, 
+    AaTree<
+      AaNode<string, vector<string> >,
+      string
+    >, 
+    DecoratorFileRead<ostream, string>, 
+    string, 
+    ifstream
+  >();
+  // importer
+  time_t now = time(NULL), then;
+  importer->import(files, tree, file_read);
+  then = time(NULL);
+  cout<<"indexing time "<<difftime(then, now)<<" seconds"<<endl;
   delete results;
   delete tree;
   delete metrics;
+  delete files;
+  delete file_read;
+  delete importer;
   return 0;
 }
