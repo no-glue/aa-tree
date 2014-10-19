@@ -1,7 +1,7 @@
-template<typename Type, typename Qnode, typename Qdepth, class List, class Node, class Tree>class MetricsAaTree {
+template<typename Type, typename Qnode, typename Qdepth, class List, class Node, class Tree>class AdapterMetricsAaTree {
 public:
-  MetricsAaTree() {}
-  MetricsAaTree(List * & results, Tree * & tree):results(results), tree(tree) {}
+  AdapterMetricsAaTree() {}
+  AdapterMetricsAaTree(List * & results, Tree * & tree):results(results), tree(tree) {}
   void collect_nodes() {
     // add number of nodes to results
     collect_nodes(results, tree);
