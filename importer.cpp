@@ -102,11 +102,10 @@ int main() {
   metrics->collect_edges();
   metrics->collect_density();
   metrics->collect_average_degree();
-  while(results->get_head()) {
-    cout<<results->get_head()->key<<" "<<results->get_head()->value<<endl;
-    results->pop_left();
-  }
+  now = time(NULL);
   metrics->breadth_first_search();
+  then = time(NULL);
+  cout<<"bfs time "<<difftime(then, now)<<" seconds"<<endl;
   while(results->get_head()) {
     cout<<results->get_head()->key<<" "<<results->get_head()->value<<endl;
     results->pop_left();
