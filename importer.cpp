@@ -41,7 +41,7 @@ int main() {
   AdapterMetricsAaTree<
     string,
     queue<string>,
-    queue<string>,
+    queue<int>,
     CstringWrapper,
     DoubleList<DoubleNode<string>, string>,
     AaNode<string, vector<string> >,
@@ -52,7 +52,7 @@ int main() {
   > * metrics = new AdapterMetricsAaTree<
     string,
     queue<string>,
-    queue<string>,
+    queue<int>,
     CstringWrapper,
     DoubleList<DoubleNode<string>, string>,
     AaNode<string, vector<string> >,
@@ -102,6 +102,11 @@ int main() {
   metrics->collect_edges();
   metrics->collect_density();
   metrics->collect_average_degree();
+  while(results->get_head()) {
+    cout<<results->get_head()->key<<" "<<results->get_head()->value<<endl;
+    results->pop_left();
+  }
+  metrics->breadth_first_search();
   while(results->get_head()) {
     cout<<results->get_head()->key<<" "<<results->get_head()->value<<endl;
     results->pop_left();

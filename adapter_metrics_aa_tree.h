@@ -37,7 +37,7 @@ public:
   }
   void breadth_first_search() {
     // breadth first search
-    breadth_first_search(results, tree);
+    breadth_first_search(wrapper, buffer, results, tree);
   }
 private:
   Wrapper * wrapper;
@@ -88,35 +88,50 @@ private:
     double n = (double)nodes(tree);
     return (2 * e) / n;
   }
-  void breadth_first_search(List * & results, Tree * & tree) {
+  void breadth_first_search(Wrapper * & wrapper, char * buffer, List * & results, Tree * & tree) {
     // breadth first search
-    // Type start_node = tree->find(startnode)->value[0];
-    // Node * next = tree->find(start_node);
-    // int i = 0;
-    // Qnode node;
-    // Qdepth depth;
-
-    // for(; i < next->value.size(); i++) {
-    //   node.push(next->value[i]);
-    //   depth.push(start_depth);
-    //   tree->visited(next->value[i]);
-    // }
-
-    // while(!nodes.empty()) {
-    //   next = tree->find(nodes.front());
-    //   nodes.pop();
-    //   start_depth = depth.front();
-    //   depth.pop();
-
-    //   if(!next) continue;
-
-    //   for(i = 0; i < next->value.size(); i++) {
-    //     if(tree->is_visited(next->value[i])) continue;
-
-    //     nodes.push(next->value[i]);
-    //     depth.push(start_depth + 1);
-    //     tree->visited(next->value[i]);
-    //   }
-    // }
+    Type start_node = tree->find("startnode")->value[0];
+    Node * next = tree->find(start_node);
+    int i = 0;
+    Qnode node;
+    Qdepth depth;
+    Qdepth depth_tmp;
+    double paths = 0, lengths = 0, average_path_length = 0;
+    // bookkeeping
+    for(; i < next->value.size(); i++) {
+      paths++;
+      lengths++;
+      average_path_length = lengths / paths;
+      node.push(next->value[i]);
+      depth.push(1);
+      tree->visited(next->value[i]);
+    }
+    depth_tmp.push(1);
+    // add first level
+    while(!node.empty()) {
+      next = tree->find(node.front());
+      node.pop();
+      // pop from q
+      if(!next) continue;
+      // no next , continue
+      for(i = 0; i < next->value.size(); i++) {
+        if(tree->is_visited(next->value[i])) continue;
+        paths++;
+        lengths += (depth.front() + 1);
+        average_path_length = lengths / paths;
+        node.push(next->value[i]);
+        depth.push(depth.front() + 1);
+        tree->visited(next->value[i]);
+      }
+      depth_tmp.pop();
+      depth_tmp.push(depth.front() + 1);
+      depth.pop();
+    }
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->int_to_alpha(buffer, depth_tmp.front());
+    results->insert_right("network diameter", buffer);
+    wrapper->clear(buffer, BUFFER_SIZE);
+    wrapper->float_to_alpha(buffer, average_path_length);
+    results->insert_right("average path length", buffer);
   }
 };
