@@ -1,1 +1,0 @@
-g++ -Wall -W -fpermissive -std=c++11 importer.cpp -o importer
