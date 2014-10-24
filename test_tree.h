@@ -35,4 +35,20 @@ public:
     assert(tree->level() == 1);
     delete tree;
   }
+  void test_insert_unique(Str key1, Str value1, Str key2, Str value2, Tree * & tree) {
+    // test level
+    // should be 1 for 2 keys
+    bool inserted = true;
+    inserted = tree->insert_unique(key1, value1);
+    assert(inserted == true);
+    inserted = tree->insert_unique(key2, value2);
+    assert(inserted == false);
+    assert(tree->level() == 1);
+    Node * found = tree->find(key1);
+    assert(found != NULL);
+    assert(found->left == NULL);
+    assert(found->right == NULL);
+    assert(found->value.size() == 1);
+    delete tree;
+  }
 };

@@ -7,6 +7,12 @@ public:
     // insert key and value
     insert(key, value, root);
   }
+  bool insert_unique(Str key, Str value) {
+    // insert unique key
+    bool accum = true;
+    insert_unique(key, value, root, accum);
+    return accum;
+  }
   void remove(Str key) {
     // remove node
     if(root && !root->left && !root->right && root->key == key) {delete root; root = NULL;}
@@ -44,6 +50,15 @@ private:
     else if (key < root->key) insert(key, value, root->left);
     else if(key > root->key) insert(key, value, root->right);
     else root->value.push_back(value);
+    skew(root);
+    split(root);
+  }
+  void insert_unique(Str key, Str value, Node * & root, bool & accum) {
+    // insert key and value
+    if(!root) root = new Node(key, value);
+    else if (key < root->key) insert_unique(key, value, root->left, accum);
+    else if(key > root->key) insert_unique(key, value, root->right, accum);
+    else {accum = false; return;}
     skew(root);
     split(root);
   }

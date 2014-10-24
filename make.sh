@@ -1,0 +1,1 @@
+g++ -Wall -W -fpermissive -std=c++11 test_tree.cpp -o test_tree
